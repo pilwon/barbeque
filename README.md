@@ -2,9 +2,10 @@
 
 [![NPM](https://nodei.co/npm/barbeque.png?downloads=false&stars=false)](https://npmjs.org/package/barbeque) [![NPM](https://nodei.co/npm-dl/barbeque.png?months=6)](https://npmjs.org/package/barbeque)
 
-`barbeque` is [Redis](http://redis.io)-based task queue libary for [Node.js](http://nodejs.org/).
 
-It is inspired by [Celery](http://www.celeryproject.org) and [Kue](https://github.com/LearnBoost/kue).
+# Barbeque
+
+`Barbeque` is [Redis](http://redis.io)-based task queue library for [Node.js](http://nodejs.org/). It was inspired by [Celery](http://www.celeryproject.org) and [Kue](https://github.com/LearnBoost/kue).
 
 
 ## Installation
@@ -34,7 +35,6 @@ var bbq = new (require('barbeque'))();
 
 bbq.process('add', function (task, cb) {
   cb(null, task.data.x + task.data.y);
-  // result 
 });
 
 // New worker created that process `add` tasks.

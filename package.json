@@ -19,7 +19,10 @@
     "kue",
     "schedule",
     "delay",
-    "worker"
+    "worker",
+    "redis",
+    "db",
+    "pubsub"
   ],
   "dependencies": {
     "async": "~0.2.9",
