@@ -15,7 +15,7 @@
 
 ## Usage
 
-### New Task
+### Task
 
 ```js
 var bbq = new (require('barbeque'))();
