@@ -18,26 +18,28 @@
 ### Worker
 
 ```js
-var bbq = new (require('barbeque'))();
+var Barbeque = require('barbeque'),
+    bbq = new Barbeque();
 
 bbq.process('add', function (task, cb) {
   cb(null, task.data.x + task.data.y);
 });
 
-// New worker created that process `add` tasks.
+//--> New worker created that process `add` tasks.
 ```
 
 ### Task
 
 ```js
-var bbq = new (require('barbeque'))();
+var Barbeque = require('barbeque'),
+    bbq = new Barbeque();
 
 bbq.task('add', {
   x: 2,
   y: 3
 }).save();
 
-// New task saved to Redis DB and notified workers.
+//--> New task saved to Redis DB and notified workers.
 ```
 
 
