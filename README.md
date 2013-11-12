@@ -15,6 +15,18 @@
 
 ## Usage
 
+### Worker
+
+```js
+var bbq = new (require('barbeque'))();
+
+bbq.process('add', function (task, cb) {
+  cb(null, task.data.x + task.data.y);
+});
+
+// New worker created that process `add` tasks.
+```
+
 ### Task
 
 ```js
@@ -26,18 +38,6 @@ bbq.task('add', {
 }).save();
 
 // New task saved to Redis DB and notified workers.
-```
-
-### Worker
-
-```js
-var bbq = new (require('barbeque'))();
-
-bbq.process('add', function (task, cb) {
-  cb(null, task.data.x + task.data.y);
-});
-
-// New worker created that process `add` tasks.
 ```
 
 
