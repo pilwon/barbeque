@@ -5,7 +5,7 @@
 
 # Barbeque
 
-`Barbeque` is [Redis](http://redis.io)-based task queue library for [Node.js](http://nodejs.org/). It was inspired by [Celery](http://www.celeryproject.org) and [Kue](https://github.com/LearnBoost/kue).
+`Barbeque` is [Redis](http://redis.io)-based task queue library for [Node.js](http://nodejs.org/), inspired by [Celery](http://www.celeryproject.org) and [Kue](https://github.com/LearnBoost/kue).
 
 
 ## Installation

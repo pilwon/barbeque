@@ -1,6 +1,6 @@
 {
   "name": "barbeque",
-  "description": "Redis-based task queue",
+  "description": "Redis-based task queue library for Node.js, inspired by Celery and Kue.",
   "version": "0.1.0",
   "license": "MIT",
   "author": {
