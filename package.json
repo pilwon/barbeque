@@ -28,12 +28,12 @@
   ],
   "dependencies": {
     "async": "~0.2.9",
+    "colors": "~0.6.2",
     "lodash": "~2.2.1",
     "redis": "~0.9.0",
     "uuid": "~1.4.1"
   },
   "devDependencies": {
-    "colors": "~0.6.2",
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.7.1",
     "grunt-contrib-watch": "~0.5.3",
@@ -41,7 +41,6 @@
     "moment": "~2.4.0"
   },
   "scripts": {
-    "prepublish": "npm prune",
-    "test": "grunt test"
+    "prepublish": "npm prune"
   }
 }
