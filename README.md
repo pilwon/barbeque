@@ -21,8 +21,8 @@
 var Barbeque = require('barbeque'),
     bbq = new Barbeque();
 
-bbq.process('add', function (task, cb) {
-  cb(null, task.data.x + task.data.y);
+bbq.process('add', function (task, done) {
+  done(null, task.data.x + task.data.y);
 });
 
 //--> New worker created that process `add` tasks.

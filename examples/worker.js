@@ -12,13 +12,13 @@ var bbq = new (require('..'))({
   // prefix: 'bbq'
 });
 
-bbq.process('add', function (task, cb) {
-  cb(null, task.data.x + task.data.y);
+bbq.process('add', function (task, done) {
+  done(null, task.data.x + task.data.y);
 });
 
-bbq.process('divide', function (task, cb) {
+bbq.process('divide', function (task, done) {
   if (task.data.y === 0) {
-    return cb(new Error('Division by zero.'));
+    return done(new Error('Division by zero.'));
   }
-  cb(null, task.data.x / task.data.y);
+  done(null, task.data.x / task.data.y);
 });
