@@ -4,14 +4,16 @@
 
 'use strict';
 
+var util = require('util');
+
 require('colors');
 
 var bbq = new (require('..'))({
-  // host: 'localhost',
-  // port: 6379,
-  // password: null,
-  // namespace: null,
-  // prefix: 'bbq'
+  namespace: 'test'
+}).on('complete', function (task) {
+  console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).cyan);
+}).on('failed', function (task) {
+  console.error(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).red);
 });
 
 bbq.process('add', function (task, done) {

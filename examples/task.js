@@ -5,11 +5,7 @@
 'use strict';
 
 var bbq = new (require('..'))({
-  // host: 'localhost',
-  // port: 6379,
-  // password: null,
-  // namespace: null,
-  // prefix: 'bbq'
+  namespace: 'test'
 });
 
 bbq.task('add', {
