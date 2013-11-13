@@ -46,6 +46,30 @@ bbq.task('add', {
 * [See more comprehensive examples here.](https://github.com/pilwon/barbeque/tree/master/examples)
 
 
+## API
+
+```js
+.task(type, data)  // Create an instance of Task
+.process(type, data)
+.processAll(obj)  // where obj is {key:type,val:data} and nestable
+```
+
+### Task
+
+```js
+.priority(priority)
+.save(optionalCallback)
+```
+
+### Worker Events
+
+```js
+.on('processing', function (task))
+.on('complete', function (task))
+.on('failed', function (task))
+```
+
+
 ## Credits
 
   See the [contributors](https://github.com/pilwon/barbeque/graphs/contributors).
