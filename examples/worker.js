@@ -4,6 +4,8 @@
 
 'use strict';
 
+require('colors');
+
 var bbq = new (require('..'))({
   // host: 'localhost',
   // port: 6379,
