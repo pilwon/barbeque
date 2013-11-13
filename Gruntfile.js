@@ -24,7 +24,8 @@ module.exports = function (grunt) {
         files: [
           '**/*.js',
           '!node_modules/**/*'
-        ]
+        ],
+        tasks: ['default']
       }
     }
   });
