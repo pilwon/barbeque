@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/pilwon/barbeque.git"
+    "url": "git://github.com/pilwon/node-barbeque.git"
   },
   "keywords": [
     "barbeque",
