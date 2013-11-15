@@ -65,9 +65,13 @@ bbq.create('add', {
 ### Worker Events
 
 ```js
+.on('active', function (task))
 .on('processing', function (task))
 .on('complete', function (task))
 .on('failed', function (task))
+.on('inactive', function (task))
+.on('log', function (task, msg))
+.on('progress', function (task, percent))
 ```
 
 
