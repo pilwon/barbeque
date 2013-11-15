@@ -34,7 +34,7 @@ bbq.process('add', function (task, done) {
 var Barbeque = require('barbeque'),
     bbq = new Barbeque();
 
-bbq.task('add', {
+bbq.create('add', {
   x: 2,
   y: 3
 }).save();
@@ -49,7 +49,7 @@ bbq.task('add', {
 ## API
 
 ```js
-.task(type, data)  // Create an instance of Task
+.create(type, data)  // Create an instance of Task
 .process(type, data)
 .processAll(obj)  // where obj is {key:type,val:data} and nestable
 ```

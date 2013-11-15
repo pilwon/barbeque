@@ -8,12 +8,12 @@ var bbq = new (require('..'))({
   namespace: 'test'
 });
 
-bbq.task('add', {
+bbq.create('add', {
   x: 2,
   y: 3
 }).save();
 
-bbq.task('divide', {
+bbq.create('divide', {
   x: 4,
   y: 0
 }).save();
