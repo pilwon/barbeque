@@ -1,4 +1,4 @@
-[![Logo](https://raw.github.com/pilwon/node-barbeque/master/logo.jpg)](http://en.wikipedia.org/wiki/Barbecue)
+[![Logo](https://raw.github.com/pilwon/barbeque/master/logo.jpg)](http://en.wikipedia.org/wiki/Barbecue)
 
 [![NPM](https://nodei.co/npm/barbeque.png?downloads=false&stars=false)](https://npmjs.org/package/barbeque) [![NPM](https://nodei.co/npm-dl/barbeque.png?months=6)](https://npmjs.org/package/barbeque)
 
@@ -43,7 +43,7 @@ bbq.create('add', {
 ```
 
 
-* [See more comprehensive examples here.](https://github.com/pilwon/node-barbeque/tree/master/examples)
+* [See more comprehensive examples here.](https://github.com/pilwon/barbeque/tree/master/examples)
 
 
 ## API
@@ -77,7 +77,7 @@ bbq.create('add', {
 
 ## Credits
 
-  See the [contributors](https://github.com/pilwon/node-barbeque/graphs/contributors).
+  See the [contributors](https://github.com/pilwon/barbeque/graphs/contributors).
 
 
 ## License
