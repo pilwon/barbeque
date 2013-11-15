@@ -10,13 +10,15 @@ require('colors');
 
 var bbq = new (require('..'))({
   namespace: 'test'
-}).on('processing', function (task) {
-  // console.info(util.format('[%s:%s] %s...', task.id, task.type, JSON.stringify(task.data)));
+}).on('active', function (/*task*/) {
+  // console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.data)).grey);
+}).on('processing', function (/*task*/) {
+  // console.info(util.format('[%s:%s] %s ...', task.id, task.type, JSON.stringify(task.data)).grey);
 }).on('complete', function (task) {
-  console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result || '')).cyan);
+  console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).cyan);
 }).on('failed', function (task) {
   console.error(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).red);
-})
+});
 
 bbq.process('add', function (task, done) {
   done(null, task.data.x + task.data.y);
