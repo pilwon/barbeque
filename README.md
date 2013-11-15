@@ -52,6 +52,7 @@ bbq.create('add', {
 .create(type, data)  // Create an instance of Task
 .process(type, data)
 .processAll(obj)  // where obj is {key:type,val:data} and nestable
+.run(fn, data, cb)
 ```
 
 ### Task
