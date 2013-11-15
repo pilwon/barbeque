@@ -3,7 +3,7 @@
 [![NPM](https://nodei.co/npm/barbeque.png?downloads=false&stars=false)](https://npmjs.org/package/barbeque) [![NPM](https://nodei.co/npm-dl/barbeque.png?months=6)](https://npmjs.org/package/barbeque)
 
 
-# Barbeque
+# Barbeque for Node.js
 
 `Barbeque` is [Redis](http://redis.io)-based task queue library for [Node.js](http://nodejs.org/), inspired by [Celery](http://www.celeryproject.org) and [Kue](https://github.com/LearnBoost/kue).
 
