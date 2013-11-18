@@ -33,6 +33,7 @@
     "hbs": "~2.4.0",
     "less-middleware": "~0.1.14",
     "lodash": "~2.2.1",
+    "moment": "~2.4.0",
     "redis": "~0.9.0",
     "socket.io": "~0.9.16",
     "uuid": "~1.4.1"
@@ -42,8 +43,7 @@
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.7.1",
     "grunt-contrib-watch": "~0.5.3",
-    "matchdep": "~0.3.0",
-    "moment": "~2.4.0"
+    "matchdep": "~0.3.0"
   },
   "scripts": {
     "prepublish": "npm prune"
