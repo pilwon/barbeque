@@ -1,0 +1,63 @@
+/*
+ * client/less/base.less
+ */
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
+
+body > .wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -@footer-height;
+  padding: 0 0 @footer-height;
+
+  > .content {
+    padding-top: @navbar-height;
+  }
+}
+
+a {
+  color: #000;
+}
+
+code {
+  font-size: 80%;
+  background-color: #eee;
+  color: #000;
+}
+
+.btn-inverse {
+  background-color: #444;
+  border-color: #444;
+  color: #fff;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+  }
+}
+
+.page-header {
+  margin: 0 0 15px;
+}
+
+#spinner {
+  background-color: rgba(0, 0, 0, 0.15);
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2e9;
+}

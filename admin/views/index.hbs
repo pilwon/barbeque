@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js" ng-app="app">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title ng-bind="documentTitle"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+
+<body>
+  <div id="spinner"></div>
+  <div class="wrap">
+    <nav id="nav" ui-view="nav"></nav>
+    <div class="content">
+      <div id="alert" ui-view="alert"></div>
+      <div id="header" ui-view="header"></div>
+      <div id="main" ui-view>{{{body}}}</div>
+    </div>
+  </div>
+  <footer id="footer" ui-view="footer"></footer>
+
+  <script>
+    window.config = {
+      catchAll: {{#if catchAll}}true{{else}}false{{/if}},
+      user: {{#if user}}{{{user.safeJSON}}}{{else}}null{{/if}}
+    };
+  </script>
+
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

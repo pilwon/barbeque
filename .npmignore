@@ -2,10 +2,12 @@
 # .npmignore
 #
 
+/.bowerrc
 /.editorconfig
 /.gitattributes
 /.jshintrc
 /.npmignore
 /Gruntfile.js
+/bower.json
 /examples/
 /logo.jpg

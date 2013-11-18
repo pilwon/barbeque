@@ -42,6 +42,15 @@ bbq.create('add', {
 //--> New task saved to Redis DB and notified workers.
 ```
 
+### Admin UI
+
+```js
+var Barbeque = require('barbeque'),
+    bbq = new Barbeque();
+
+bbq.admin();
+```
+
 
 * [See more comprehensive examples here.](https://github.com/pilwon/barbeque/tree/master/examples)
 
@@ -49,7 +58,9 @@ bbq.create('add', {
 ## API
 
 ```js
+.admin()
 .create(type, data)  // Create an instance of Task
+.listen()
 .process(type, data)
 .processAll(obj)  // where obj is {key:type,val:data} and nestable
 .run(fn, data, cb)

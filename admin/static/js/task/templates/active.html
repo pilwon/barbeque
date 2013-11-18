@@ -1,0 +1,50 @@
+<div class="task active">
+  <div class="container">
+    <div class="content">
+      <header class="page-header">
+        <h2>
+          <span class="glyphicon glyphicon-time text-warning"></span>
+          &nbsp;
+          <strong class="text-danger">{{ _.size(tasks) || 'No' }}</strong>
+          Active Task{{ _.size(tasks) > 1 ? 's' : '' }}
+        </h2>
+      </header>
+      <div class="status">
+        <table class="table table-condensed table-hover table-responsive table-striped">
+          <thead>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Priority</th>
+            <th>Attempts</th>
+            <th>Progress</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="task in tasks | limitTo:13 | orderBy:'updatedAt':reverse" class="animate-fade">
+              <td>{{ task.id | limitTo:8 }}</td>
+              <td>{{ task.type }}</td>
+              <td>{{ task.priority }}</td>
+              <td>{{ task.attempts }}</td>
+              <td>{{ task.progress }}</td>
+              <td>{{ moment(task.createdAt).fromNow() }}</td>
+              <td>
+                <button><span class="glyphicon glyphicon-zoom-in"></span></button>
+                <button><span class="glyphicon glyphicon-time"></span></button>
+                <button><span class="glyphicon glyphicon-pause"></span></button>
+                <button><span class="glyphicon glyphicon-cog"></span></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div ng-show="_.size(tasks) > 13" class="text-center">
+          <button>1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>5</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

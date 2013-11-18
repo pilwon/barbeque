@@ -1,0 +1,11 @@
+{
+  "name": "barbeque",
+  "dependencies": {
+    "angular": "~1.2.1",
+    "angular-ui-router": "~0.2.0",
+    "bootstrap": "~3.0.2",
+    "jquery": "~2.0.3",
+    "socket.io-client": "~0.9.16",
+    "restangular": "~1.1.8"
+  }
+}
