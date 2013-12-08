@@ -15,11 +15,23 @@
 
 ## Usage
 
+### Configuration Options
+
+```js
+var opts = {
+  host: 'localhost'
+  , port: 6379
+  , namespace: 'test'
+  , expires: 60 // ttl in seconds to autoexpire task key after completion, 0 is disabled (default)
+}
+
+```
+
 ### Worker
 
 ```js
 var Barbeque = require('barbeque'),
-    bbq = new Barbeque();
+    bbq = new Barbeque(opts);
 
 bbq.process('add', function (task, done) {
   done(null, task.data.x + task.data.y);
@@ -32,7 +44,7 @@ bbq.process('add', function (task, done) {
 
 ```js
 var Barbeque = require('barbeque'),
-    bbq = new Barbeque();
+    bbq = new Barbeque(opts);
 
 bbq.create('add', {
   x: 2,
