@@ -15,11 +15,19 @@
 
 ## Usage
 
+```js
+var config = {
+  // host: 'localhost'
+  // port: 6379,
+  // namespace: 'test'
+}
+```
+
 ### Worker
 
 ```js
 var Barbeque = require('barbeque'),
-    bbq = new Barbeque();
+    bbq = new Barbeque(config);
 
 bbq.process('add', function (task, done) {
   done(null, task.data.x + task.data.y);
@@ -32,7 +40,7 @@ bbq.process('add', function (task, done) {
 
 ```js
 var Barbeque = require('barbeque'),
-    bbq = new Barbeque();
+    bbq = new Barbeque(config);
 
 bbq.create('add', {
   x: 2,
@@ -58,24 +66,29 @@ bbq.admin();
 ## API
 
 ```js
-.admin()
-.create(type, data)  // Create an instance of Task
-.listen()
-.process(type, data)
-.processAll(obj)  // where obj is {key:type,val:data} and nestable
-.run(fn, data, cb)
+.admin()                   // start admin UI
+.create(type, data)        // create an instance of Task
+.listen()                  // listen to redis updates
+.process(type, processfn)  // start a processor of a specific task type
+.processAll(obj)           // obj: {key:type,val:data} and nestable
+.query(query, cb)          // query: string id, array of string ids, or filter object
+.queryDetail(query, cb)    // query: string id, array of string ids, or filter object
+.run(processFn, data, cb)  // immediately run a task
+.update(taskId, task, cb)  // update task
 ```
 
 ### Task
 
 ```js
-.priority(priority)
-.save(optionalCallback)
+.save(optionalCallback)    // enqueue task to the task queue
+.priority(priority)        // specify task priority (lower value: higher priority)
+.ttl(ttl)                  // auto-expire task (in ms)
 ```
 
 ### Worker Events
 
 ```js
+.on('error', function (err))
 .on('active', function (task))
 .on('processing', function (task))
 .on('complete', function (task))
