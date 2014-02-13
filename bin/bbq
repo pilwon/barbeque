@@ -1,0 +1,207 @@
+#!/usr/bin/env node
+
+/*
+ * bin/bbq
+ */
+
+'use strict';
+
+var assert = require('assert'),
+    path = require('path'),
+    util = require('util');
+
+require('colors');
+
+var _ = require('lodash'),
+    pkg = require('../package');
+
+var COMMANDS = [
+  'admin',
+  'help',
+  'monitor',
+  'task',
+  'worker'
+];
+
+var PROGRAM = path.basename(process.argv[1]);
+
+exports.admin = function (namespace, args) {
+  var port = args[0],
+      host = args[1],
+      path = args[2];
+
+  var bbq = new (require('..'))({
+    namespace: namespace
+  });
+
+  bbq.admin({
+    host: host,
+    port: (port ? parseInt(port, 10) : port),
+    path: path,
+    namespace: namespace
+  }, function (err, url) {
+    if (err) { return console.error(err.message); }
+    if (namespace) {
+      console.info(util.format('Started Barbeque Admin (namespace: %s)... %s', namespace, url).green);
+    } else {
+      console.info(util.format('Started Barbeque Admin... %s', url).green);
+    }
+  });
+};
+
+exports.help = function (namespace, args) {
+  var command = (args || [])[0];
+
+  switch (command) {
+  case 'admin':
+    console.error('Usage:');
+    console.error();
+    console.error('%s admin', PROGRAM);
+    console.error('%s admin <port>', PROGRAM);
+    console.error('%s admin <port> <host>', PROGRAM);
+    console.error('%s admin <port> <host> <path>', PROGRAM);
+    break;
+  case 'help':
+    console.error('Usage:');
+    console.error();
+    console.error('%s help', PROGRAM);
+    console.error('%s help <command>', PROGRAM);
+    break;
+  case 'monitor':
+    console.error('Usage:');
+    console.error();
+    console.error('%s monitor', PROGRAM);
+    break;
+  case 'task':
+    console.error('Usage:');
+    console.error();
+    console.error('%s task summary', PROGRAM);
+    console.error('%s task create <type>', PROGRAM);
+    console.error('%s task create <type> <key>=<val> [<key>=<val> ...]', PROGRAM);
+    console.error('%s task <id>', PROGRAM);
+    console.error('%s task <id> update <key>=<val> [<key>=<val> ...]', PROGRAM);
+    console.error('%s task <id> delete', PROGRAM);
+    console.error('%s task <id> state', PROGRAM);
+    console.error('%s task <id> state <new-state>', PROGRAM);
+    console.error('%s task <id> priority', PROGRAM);
+    console.error('%s task <id> priority <new-priority>', PROGRAM);
+    console.error('%s task <id> progress', PROGRAM);
+    console.error('%s task <id> progress <new-progress>', PROGRAM);
+    break;
+  default:
+    console.error('Usage: %s <command>', PROGRAM);
+    console.error();
+    console.error('where <command> is one of:');
+    _.each(COMMANDS, function (command) {
+      console.error('    %s', command);
+    });
+    break;
+  }
+
+  console.error();
+  console.error('[options]');
+  console.error('    -h                quick help on command (--help)');
+  console.error('    -n <namespace>    specify namespace (--namespace)');
+  console.error();
+  console.error(util.format('%s@%s: %s', pkg.name, pkg.version, process.argv[1]).grey);
+  console.error('Barbeque Project: https://github.com/pilwon/barbeque'.grey);
+
+  process.exit(1);
+};
+
+exports.monitor = function (namespace, args) {
+  var bbq = new (require('..'))({
+    namespace: namespace
+  }).on('active', function (task) {
+    console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.data)));
+  }).on('processing', function (task) {
+    console.info(util.format('[%s:%s] %s ...', task.id, task.type, JSON.stringify(task.data)).bold);
+  }).on('complete', function (task) {
+    console.info(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).cyan);
+  }).on('failed', function (task) {
+    console.error(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).red);
+  }).on('inactive', function (task) {
+    console.error(util.format('[%s:%s] %s', task.id, task.type, JSON.stringify(task.result)).grey);
+  }).listen({
+    namespace: namespace
+  });
+
+  if (namespace) {
+    console.info(util.format('Monitoring Barbeque (namespace: %s) ...', namespace).green);
+  } else {
+    console.info(util.format('Monitoring Barbeque ...').green);
+  }
+};
+
+exports.task = function (namespace, args) {
+  var type = args[0];
+
+  if (!_.isString(type) || _.isEmpty(type)) {
+    return exports.help(null, ['task']);
+  }
+};
+
+exports.worker = function (namespace, args) {
+
+};
+
+exports.main = function () {
+  var args = process.argv.slice(2),
+      namespace,
+      i;
+
+  // Parse version option.
+  if (_.contains(args, '-v') || _.contains(args, '--version')) {
+    return console.log(pkg.version);
+  }
+
+  // Parse help option.
+  if (_.contains(args, '-h') || _.contains(args, '--help')) {
+    return exports.help(null, _.difference(args, ['-h', '--help']));
+  }
+
+  // Parse namespace.
+  for (i = args.length - 1; i >= 0; --i) {
+    if (_.contains(['-n', '--namespace'], args[i])) {
+      if (!namespace) {
+        namespace = args.splice(i, 2)[1];
+        if (!namespace) {
+          return exports.help(null, args);
+        }
+      } else {
+        args.splice(i, 2)[1];
+      }
+    }
+  }
+
+  // Parse command & command args.
+  var command = args[0],
+      commandArgs = args.slice(1);
+
+  // Handle empty command.
+  if (_.isEmpty(command)) {
+    if (namespace) {
+      console.error(util.format('Empty command').red);
+      console.error();
+    }
+
+    return exports.help();
+  }
+
+  // Handle invalid command.
+  if (!_.contains(COMMANDS, command)) {
+    console.error(util.format('Invalid command: %s', command).red);
+    console.error();
+
+    return exports.help();
+  }
+
+  // Execute command.
+  assert(_.isFunction(exports[command]), 'Not yet implemented: ' + command);
+  process.title = util.format('%s %s %s', PROGRAM, command, commandArgs.join(' '));
+  exports[command](namespace, commandArgs);
+};
+
+if (require.main === module) {
+  exports.main();
+}

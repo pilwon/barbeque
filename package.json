@@ -27,23 +27,27 @@
     "pubsub"
   ],
   "dependencies": {
-    "async": "~0.2.9",
-    "browserify-middleware": "~1.19.0",
-    "express": "~3.4.4",
-    "hbs": "~2.4.0",
-    "less-middleware": "~0.1.14",
-    "lodash": "~2.2.1",
-    "moment": "~2.4.0",
-    "redis": "~0.9.0",
-    "socket.io": "~0.9.16",
-    "uuid": "~1.4.1"
+    "async": "0.2.9",
+    "browserify-middleware": "1.19.0",
+    "colors": "0.6.2",
+    "express": "3.4.4",
+    "hbs": "2.4.0",
+    "less-middleware": "0.1.14",
+    "lodash": "2.2.1",
+    "moment": "2.4.0",
+    "redis": "0.9.0",
+    "socket.io": "0.9.16",
+    "uuid": "1.4.1"
   },
   "devDependencies": {
-    "colors": "~0.6.2",
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.7.1",
-    "grunt-contrib-watch": "~0.5.3",
-    "matchdep": "~0.3.0"
+    "grunt": "0.4.1",
+    "grunt-contrib-jshint": "0.7.1",
+    "grunt-contrib-watch": "0.4.3",
+    "matchdep": "0.3.0"
+  },
+  "bin": {
+    "barbeque": "./bin/bbq",
+    "bbq": "./bin/bbq"
   },
   "scripts": {
     "prepublish": "npm prune"
