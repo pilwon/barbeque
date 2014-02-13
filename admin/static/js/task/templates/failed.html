@@ -1,7 +1,25 @@
-<div class="task failed">
+<div class="task processing">
   <div class="container">
     <div class="content">
       <header class="page-header">
+        <div class="pull-right">
+          <button type="button" class="new-task btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span>
+            New Task
+          </button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <strong>{{ config.task.listLimit }}</strong>/page <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-class="{ active: value === config.task.listLimit }" ng-repeat="value in app.task.buildTaskListLimitArray()">
+                <a href="" ng-click="setLimit(value)">
+                  <strong>{{ value }}</strong>/page
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <h2>
           <span class="glyphicon glyphicon-remove text-warning"></span>
           &nbsp;
@@ -21,7 +39,7 @@
             <th>Actions</th>
           </thead>
           <tbody>
-            <tr ng-repeat="task in tasks | limitTo:13 | orderBy:'updatedAt':reverse" class="animate-fade">
+            <tr ng-repeat="task in tasks | limitTo:config.task.listLimit | orderBy:'updatedAt':reverse" class="animate-fade">
               <td>{{ task.id | limitTo:8 }}</td>
               <td>{{ task.type }}</td>
               <td>{{ task.priority }}</td>
@@ -29,20 +47,32 @@
               <td>{{ task.progress }}</td>
               <td>{{ moment(task.createdAt).fromNow() }}</td>
               <td>
-                <button><span class="glyphicon glyphicon-zoom-in"></span></button>
-                <button><span class="glyphicon glyphicon-time"></span></button>
-                <button><span class="glyphicon glyphicon-pause"></span></button>
-                <button><span class="glyphicon glyphicon-cog"></span></button>
+                <button title="Set active state">
+                  <span class="glyphicon glyphicon-time"></span>
+                </button>
+                <button title="Set inactive state">
+                  <span class="glyphicon glyphicon-pause"></span>
+                </button>
+                <button title="Show detail">
+                  <span class="glyphicon glyphicon-cog"></span>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <div ng-show="_.size(tasks) > 13" class="text-center">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
+        <div class="text-center text-muted" ng-show="_.isEmpty(tasks)">
+          <em>Waiting for tasks...</em>
+        </div>
+        <div ng-show="_.size(tasks) > config.task.listLimit" class="text-center">
+          <ul class="pagination">
+            <li class="disabled"><a href="">&laquo;</a></li>
+            <li class="active"><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li><a href="">&raquo;</a></li>
+          </ul>
         </div>
       </div>
     </div>

@@ -5,13 +5,10 @@
 'use strict';
 
 // Load dependencies.
-// require('angular.animate');
-// require('angular.translate');
 require('angular.ui');
 require('bootstrap');
-// require('jquery.center');
-// require('jquery.spin');
-require('restangular');
+require('jquery.center');
+require('jquery.spin');
 
 // Register modules.
 require('./layout');

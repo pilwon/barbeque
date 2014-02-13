@@ -4,31 +4,33 @@
 
 'use strict';
 
-var _ = require('lodash'),
-    uuid = require('uuid');
+var _ = require('lodash');
 
 var _tasks = {},
     _activeTasks = [],
-    _processingTasks = [],
     _completeTasks = [],
     _failedTasks = [],
-    _inactiveTasks = [];
+    _inactiveTasks = [],
+    _injected,
+    _processingTasks = [];
+
+function _addEventListeners() {
+  var $rootScope = _injected.$rootScope;
+
+  $rootScope.$on('task:detail', function (e, task) {
+    _onTaskDetail(task);
+  });
+
+  $rootScope.$on('task:list', function (e, tasks) {
+    _onTaskList(tasks);
+  });
+
+  $rootScope.$on('task:update', function (e, taskId) {
+    _onTaskUpdate(taskId);
+  });
+}
 
 function _addTask(task) {
-  task = {
-    id: uuid.v4().replace(/-/g, ''),
-    state: Math.random() > 0.5 ? 'active' : 'processing',
-    type: 'test',
-    data: {
-      hello: 'world'
-    },
-    priority: 'normal',
-    attempts: 0,
-    progress: 0,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
-
   task = _tasks[task.id] = {
     id: task.id,
     state: task.state,
@@ -54,12 +56,17 @@ function _addTask(task) {
   }
 }
 
-function getActiveTasks() {
-  return _activeTasks;
+function buildTaskListLimitArray() {
+  return _.range(10, 20, 2)
+          .concat(_.range(20, 60, 10));
 }
 
-function getProcessingTasks() {
-  return _processingTasks;
+function createTask() {
+  // TODO
+}
+
+function getActiveTasks() {
+  return _activeTasks;
 }
 
 function getCompleteTasks() {
@@ -74,29 +81,85 @@ function getInactiveTasks() {
   return _inactiveTasks;
 }
 
-function setActiveTask(taskId) {
+function getProcessingTasks() {
+  return _processingTasks;
+}
+
+function getTaskDetail(taskId) {
+  socket.requestTaskDetail(taskId);
+}
+
+function _onTaskDetail(task) {
+  // TODO
+  console.log(task);
+  _addTask(task);
+}
+
+function _onTaskList(tasks) {
+  // TODO
+  console.log(tasks);
+  tasks.forEach(function (task) {
+    _addTask(task);
+  });
+}
+
+function _onTaskUpdate(task) {
+  // TODO
+  console.log(task);
+  _addTask(task);
+}
+
+function setActiveState(taskId) {
   // TODO
 }
 
-function setInactiveTask(taskId) {
+function setInactiveState(taskId) {
   // TODO
+}
+
+function updateState(task) {
+  // TODO
+  socket.requestTaskUpdate(task);
 }
 
 // Public API
 exports = module.exports = function (ngModule) {
-  ngModule.factory('task', function () {
-    setInterval(function () {
-      _addTask();
-    }, 100);
+  ngModule.factory('task', function ($rootScope, socket) {
+    _injected = {
+      $rootScope: $rootScope,
+      socket: socket
+    };
+
+    _addEventListeners();
+
+    // setInterval(function () {
+    //   createTask({
+    //     id: require('uuid').v4().replace(/-/g, ''),
+    //     state: Math.random() > 0.5 ? 'active' : 'processing',
+    //     type: 'test',
+    //     data: {
+    //       hello: 'world'
+    //     },
+    //     priority: 'normal',
+    //     attempts: 0,
+    //     progress: 0,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date()
+    //   });
+    // }, 100);
 
     return {
+      createTask: createTask,
+      buildTaskListLimitArray: buildTaskListLimitArray,
       getActiveTasks: getActiveTasks,
-      getProcessingTasks: getProcessingTasks,
       getCompleteTasks: getCompleteTasks,
       getFailedTasks: getFailedTasks,
       getInactiveTasks: getInactiveTasks,
-      setActiveTask: setActiveTask,
-      setInactiveTask: setInactiveTask
+      getProcessingTasks: getProcessingTasks,
+      getTaskDetail: getTaskDetail,
+      setActiveState: setActiveState,
+      setInactiveState: setInactiveState,
+      updateState: updateState
     };
   });
 };

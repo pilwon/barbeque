@@ -9,7 +9,10 @@ var assert = require('assert'),
     util = require('util');
 
 var _ = require('lodash'),
-    express = require('express');
+    express = require('express'),
+    hbs = require('hbs');
+
+var pkg = require('../package');
 
 var DEFAULT_HOST = 'localhost',
     DEFAULT_PORT = 3000,
@@ -46,9 +49,16 @@ function App(options, cb) {
   this._app = null;
   this._bbq = null;
 
+  this._setupHandlebars();
   this._runServer(options.host, options.port, options.path, cb);
   this._subscribeBBQEvents(options.namespace);
 }
+
+App.prototype._attachLocals = function (app) {
+  app.locals({
+    __versionBarbeque: pkg.version
+  });
+};
 
 App.prototype._attachMiddleware = function (app, prefix) {
   app.set('views', __dirname + '/views');
@@ -108,11 +118,18 @@ App.prototype._runServer = function (host, port, path, cb) {
 
   this._attachMiddleware(app, path);
   this._attachRoutes(app, path);
+  this._attachLocals(app);
   this._socketio = new (require('./socketio'))(this, io);
 
   server.listen(port, host, function (err) {
     if (err) { return cb(err); }
-    cb(null, util.format('http://%s:%d%s', host, port, path));
+    cb(null, util.format('http://%s:%d%s', host, port, path ? '/' + path : ''));
+  });
+};
+
+App.prototype._setupHandlebars = function () {
+  hbs.registerHelper('json', function (context) {
+    return JSON.stringify(context);
   });
 };
 

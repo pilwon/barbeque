@@ -23,7 +23,7 @@
         </li>
         <li ng-class="{ active: $state.is('app.processing') }">
           <a ng-href="{{ $state.href('app.processing') }}">
-            <span class="glyphicon glyphicon-retweet"></span>
+            <span class="glyphicon glyphicon-refresh"></span>
             Processing
             <span class="counter"><strong>{{ _.size(processingTasks) }}</strong></span>
           </a>

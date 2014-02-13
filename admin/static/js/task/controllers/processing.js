@@ -6,36 +6,33 @@
 
 var _ = require('lodash');
 
-var SECOND = 1000;
-
 var _injected;
 
-function _init() {
-  var $scope = _injected.$scope,
-      $timeout = _injected.$timeout,
-      task = _injected.task;
+function _onCreate() {
 
-  _.assign($scope, {
-    tasks: task.getProcessingTasks()
-  });
+}
 
-  var updateTimeoutId = $timeout(function update() {
-    $scope.$apply();
-    updateTimeoutId = $timeout(update, SECOND);
-  }, SECOND);
+function _onDestroy() {
 
-  $scope.$on('$destroy', function () {
-    $timeout.cancel(updateTimeoutId);
-  });
+}
+
+function setLimit(limit) {
+  _injected.app.config.task.listLimit = limit;
 }
 
 exports = module.exports = function (ngModule) {
-  ngModule.controller('ProcessingCtrl', function ($scope, $timeout, task) {
+  ngModule.controller('ProcessingCtrl', function ($scope, app) {
     _injected = {
       $scope: $scope,
-      $timeout: $timeout,
-      task: task
+      app: app
     };
-    _init();
+
+    _.assign($scope, {
+      setLimit: setLimit,
+      tasks: app.task.getProcessingTasks(),
+    });
+
+    $scope.$on('$destroy', _onDestroy);
+    _onCreate();
   });
 };

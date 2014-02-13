@@ -6,40 +6,41 @@
 
 var _ = require('lodash');
 
-var SECOND = 1000;
+var _injected,
+    _updateIntervalId;
 
-var _injected;
-
-function _init() {
+function _onCreate() {
   var $scope = _injected.$scope,
       $timeout = _injected.$timeout,
-      task = _injected.task;
+      app = _injected.app;
 
-  _.assign($scope, {
-    activeTasks: task.getActiveTasks(),
-    processingTasks: task.getProcessingTasks(),
-    completeTasks: task.getCompleteTasks(),
-    failedTasks: task.getFailedTasks(),
-    inactiveTasks: task.getInactiveTasks()
-  });
-
-  var updateTimeoutId = $timeout(function update() {
+  _updateIntervalId = $timeout(function update() {
     $scope.$apply();
-    updateTimeoutId = $timeout(update, SECOND);
-  }, SECOND);
+    _updateIntervalId = $timeout(update, app.config.task.listUpdateInterval);
+  }, app.config.task.listUpdateInterval);
+}
 
-  $scope.$on('$destroy', function () {
-    $timeout.cancel(updateTimeoutId);
-  });
+function _onDestroy() {
+  $timeout.cancel(_updateIntervalId);
 }
 
 exports = module.exports = function (ngModule) {
-  ngModule.controller('_NavCtrl', function ($scope, $timeout, task) {
+  ngModule.controller('_NavCtrl', function ($scope, $timeout, app) {
     _injected = {
       $scope: $scope,
       $timeout: $timeout,
-      task: task
+      app: app
     };
-    _init();
+
+    _.assign($scope, {
+      activeTasks: app.task.getActiveTasks(),
+      processingTasks: app.task.getProcessingTasks(),
+      completeTasks: app.task.getCompleteTasks(),
+      failedTasks: app.task.getFailedTasks(),
+      inactiveTasks: app.task.getInactiveTasks()
+    });
+
+    $scope.$on('$destroy', _onDestroy);
+    _onCreate();
   });
 };
